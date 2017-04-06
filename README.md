@@ -1,56 +1,58 @@
-# quiet-grunt
+# mostly-quiet-grunt
 
-> Limit grunt output to dots if everything goes well. On error print dump everything.
+> Limit grunt output to nothing, dots, or very deliberate output if everything goes well. On error print dump everything.
 
-[![NPM info][nodei.co]](https://npmjs.org/package/quiet-grunt)
+[![NPM info][nodei.co]](https://npmjs.org/package/mostly-quiet-grunt)
 
 [![dependencies][dependencies-image]][dependencies-url]
-[![endorse][endorse-image]][endorse-url]
 
-Default Grunt output is way too verbose. *quiet-grunt* replaces each message with single dot.
-It looks like this everything goes well `....`. If there is an error, entire output is dumped.
+## The Problem
+The default output from Grunt is more verbose than I would like. During a good build, I would prefer to silence all output except for a test report summary at the end.
+
+Like this module's ancestor, [quiet-grunt](https://github.com/bahmutov/quiet-grunt), this will suppress most of the grunt output on a good build. It offers a caller two features that quiet-grunt does not:
+
+* an option to not even show a dot on every message
+* a special exposed routine which allows one to bypass the output suppression.
+
+If there is an error, the entire output will be dumped.
 
 ## Install
 
 ```shell
-npm install quiet-grunt --save-dev
+npm install  --save-dev mostly-quiet-grunt
 ```
 
-Once the plugin has been installed, load it at the beginning of the gruntfile.
+## Use
+
+Once the module has been installed, require it at the beginning of the gruntfile.
 
 ```js
-require('quiet-grunt');
+const controller = require('mostly-quiet-grunt');
 
 module.exports = function (grunt) {
-...
+   ...
+   controller.showDots(true);
+   controller.passthroughWrite('Show this during the run of grunt.');
+   ...
 ```
 
-To skip plugin and use the default reporting, use command line argument `--no-quiet`
+If an option `--no-quiet`, `--verbose`, `--noq`, `-v` or the command `watch` is provided, then this will not be turned on.
 
-If you want to have ability to make grunt silent but not as default behavior use next trick
-```
-if (grunt.option('q') || grunt.option('quiet')) {
-    require('quiet-grunt');
-}
-```
+## What it does
+When this module is invoked, if none of the options mentioned above are used, then it will replace the `process.stdout.write(message)` routine with a function that stores the message. When the process then starts to `exit()`, if the exit code is not 0, then write the accumulated messages.
 
-Inspired by [time-grunt](https://github.com/sindresorhus/time-grunt)
+If the `controller.passthroughWrite(message)` function is called, this will bypass the storing process. If `controller.showDots(true|false)` is called, write (or, if false, don't write) a period character each time `process.stdout.write(message)` is called.
 
 ## Small print
 
-Author: Gleb Bahmutov &copy; 2014
-[@bahmutov](https://twitter.com/bahmutov) [glebbahmutov.com](http://glebbahmutov.com)
+Author: 柏大衛 &copy; 2017
+
+This is a fork of [bahmutov/quiet-grunt](https://github.com/bahmutov/quiet-grunt). You should use that module unless you particularly want the "nothing" or the "very deliberate outout" this offers.
 
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
-Spread the word: tweet, star on github, etc.
+Support: if you find any problems with this module, open an issue on Github.
 
-Support: if you find any problems with this module, email / tweet / open issue on Github
-
-[ci-image]: https://travis-ci.org/bahmutov/quiet-grunt.png?branch=master
-[ci-url]: https://travis-ci.org/bahmutov/quiet-grunt
-[nodei.co]: https://nodei.co/npm/quiet-grunt.png?downloads=true
-[dependencies-image]: https://david-dm.org/bahmutov/quiet-grunt.png
-[dependencies-url]: https://david-dm.org/bahmutov/quiet-grunt
-[endorse-image]: https://api.coderwall.com/bahmutov/endorsecount.png
-[endorse-url]: https://coderwall.com/bahmutov
+[nodei.co]: https://nodei.co/npm/mostly-quiet-grunt.png?downloads=true
+[dependencies-image]: https://david-dm.org/bodawei/mostly-quiet-grunt.png
+[dependencies-url]: https://david-dm.org/bodawei/mostly-quiet-grunt

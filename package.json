@@ -1,14 +1,9 @@
 {
-  "name": "quiet-grunt",
-  "version": "0.2.3",
-  "description": "Limit grunt output to dots if everything goes well. On error print dump everything.",
+  "name": "mostly-quiet-grunt",
+  "version": "1.0.0",
+  "description": "Limit grunt output to nothing, dots, or very deliberate output if everything goes well. On error print dump everything.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:bahmutov/quiet-grunt.git"
   },
   "keywords": [
     "grunt",
@@ -16,10 +11,10 @@
     "quiet",
     "reporter"
   ],
-  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "author": "柏大衛 <biede0@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bahmutov/quiet-grunt/issues"
+    "url": "https://github.com/bodawei/mostly-quiet-grunt/issues"
   },
-  "homepage": "https://github.com/bahmutov/quiet-grunt"
+  "homepage": "https://github.com/bodawei/mostly-quiet-grunt"
 }
