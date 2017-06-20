@@ -1,6 +1,6 @@
 {
   "name": "mostly-quiet-grunt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Limit grunt output to nothing, dots, or very deliberate output if everything goes well. On error print dump everything.",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/bodawei/mostly-quiet-grunt/issues"
   },
-  "homepage": "https://github.com/bodawei/mostly-quiet-grunt"
+  "homepage": "https://github.com/bodawei/mostly-quiet-grunt",
+  "repository": {
+     "type" : "git",
+     "url" : "https://github.com/bodawei/mostly-quiet-grunt"
+  }
 }

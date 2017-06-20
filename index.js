@@ -17,7 +17,7 @@ function showDots(value) {
 
 function passthroughWrite( /* arguments */ ) {
    if (originalWrite) {
-      originalWrite.apply(undefined, arguments);
+      originalWrite(arguments);
    } else {
       process.stdout.write.apply(process.stdout, arguments)
    }
@@ -33,8 +33,14 @@ if (!noQuiet) {
     if (writeAPeriod) {
       originalWrite('.');
     }
-    // originalWrite.apply(1, arguments);
-    output += Array.prototype.join.call(arguments, '');
+
+    output += arguments[0];
+
+    var cb = arguments[2] || arguments[1];
+
+    if (typeof cb === 'function') {
+       cb();
+    }
   };
 
   // See https://github.com/sindresorhus/time-grunt and
