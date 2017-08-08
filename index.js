@@ -17,7 +17,7 @@ function showDots(value) {
 
 function passthroughWrite( /* arguments */ ) {
    if (originalWrite) {
-      originalWrite(arguments);
+      originalWrite.apply(process.stdout, arguments);
    } else {
       process.stdout.write.apply(process.stdout, arguments)
    }
@@ -28,10 +28,10 @@ if (!noQuiet) {
   var originalExit = process.exit;
 
   // Replace the original write with our own
-  originalWrite = process.stdout.write.bind(process.stdout);
+  originalWrite = process.stdout.write;
   process.stdout.write = function () {
     if (writeAPeriod) {
-      originalWrite('.');
+      originalWrite.apply(process.stdout, '.');
     }
 
     output += arguments[0];
